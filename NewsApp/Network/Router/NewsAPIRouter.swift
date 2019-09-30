@@ -1,0 +1,39 @@
+//
+//  RecipeAPIRouter.swift
+//  NewsApp
+//
+//  Created by Valeriaa Bohachevska on 30/05/2019.
+//  Copyright © 2019 Valeriaa Bohachevska. All rights reserved.
+//
+
+import Foundation
+
+enum NewsAPIRouter: NetworkRoutable {
+    case getNews(page: Int)
+    
+    var host: String { return "newsapi.org" }
+    
+    var path: String {
+        switch self {
+        case .getNews(_):
+            return "/v2/top-headlines"
+        }
+    }
+    
+    var httpMethod: String { return "GET" }
+    
+    var authenticationQueryParameterers: Parameters? {
+        return ["apiKey": "API-KEY"]
+    }
+    
+    var queryParameters: Parameters? {
+        switch self {
+        case .getNews(let page):
+            return ["page": page, "language": "en"]
+        }
+    }
+    
+    var bodyParameters: Parameters? { return nil }
+    
+    var headers: Headers? { return nil }
+}
